@@ -5,7 +5,7 @@ function ExploreMenu({category, setCategory}) {
 
 
   return (
-    <div className="explore-menu">
+    <div className="explore-menu" id="explore-menu">
       <h1>Exlpore Menu</h1>
       <p className="explore-menu-text">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae veniam
