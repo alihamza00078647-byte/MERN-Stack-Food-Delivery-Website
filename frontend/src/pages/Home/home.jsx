@@ -3,6 +3,7 @@ import ExploreMenu from "../../components/exploreMenu/ExploreMenu";
 import Header from "../../components/header/Header";
 import "./home.css"
 import FoodDisplay from "../../components/foodDisplay/foodDisplay";
+import AppDownload from "../../components/AppDownload/AppDownload";
 
 
 function Home () {
@@ -15,6 +16,7 @@ function Home () {
             <ExploreMenu category={category} setCategory={setCategory} />
 
             <FoodDisplay category={category} />
+            <AppDownload />
         </div>
     )
 }
