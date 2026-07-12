@@ -1,10 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./LoginPopUp.css";
 import { assets } from "../../assets/assets";
 
 function LoginPopup({ setShowLogin }) {
   // const [currentState, setCurrentState] = useState("Sign Up");
   const [currentState, setCurrentState] = useState("Login");
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
+
+  const onChangeHandler = async (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    setData(data => ({...data, [name]:value}));
+  }
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
 
   return (
     <div className="login-popup">
@@ -21,11 +38,13 @@ function LoginPopup({ setShowLogin }) {
           {currentState === "Login" ? (
             <></>
           ) : (
-            <input type="text" placeholder="username" className="" required />
+            <input type="text" onChange={() => onChangeHandler} value={data.name} placeholder="name" className="" required />
           )}
 
-          <input type="email" name="" id="" placeholder="Email" required />
+          <input type="email" name="email" placeholder="Email" onChange={() => onChangeHandler} value={data.email}  required />
           <input
+            onChange={() => onChangeHandler} value={data.password}
+            name="password"
             type="password"
             placeholder="Password"
             required

@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 function List() {
   const [list, setList] = useState([]);
 
+
+  // Retrieve All The lists
   const fetchList = async () => {
     const response = await axios.get(backendURL + "/api/food/list");
 
@@ -17,18 +19,24 @@ function List() {
     }
   };
 
-  const removeFood = async (id) => {
-    console.log(id);
 
+  // Remove Food Item from Admin List
+  const removeFood = async (id) => {
     const response = await axios.post(backendURL + "/api/food/remove", {id: id});
-    
+    await fetchList();
+    if (response.data.success) {
+      toast.success(response.data.message)
+    } else {
+      toast.success(response.data.message);
+    }
   }
 
 
   useEffect(() => {
-    // console.log(list)
     fetchList();
-  }, [])
+  }, []);
+
+  
 
   return (
     <div className="list add flex-col">

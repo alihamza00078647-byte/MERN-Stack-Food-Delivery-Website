@@ -7,6 +7,7 @@ const { default: mongoose } = require('mongoose');
 
 // Local Modules
 const {foodRouter} = require('./Router/foodRouter');
+const { userRouter } = require('./Router/userRouter');
 
 
 // Middleware
@@ -14,12 +15,14 @@ app.use(express.urlencoded());
 app.use(express.json());
 app.use(cors());
 
-// Routes
-app.get('/', (req, res, next) => {
-    res.send("API OkOk!");
-})
-
+// app.get('/', (req, res, next) => {
+    //     res.send("API OkOk!");
+    // })
+    
+    
+// api endpoints
 app.use("/api/food", foodRouter);
+app.use("/api/user", userRouter);
 
 
 // Static folder
