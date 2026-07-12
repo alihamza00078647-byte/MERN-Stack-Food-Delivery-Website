@@ -12,7 +12,10 @@ function Cart() {
     food_list,
     getTotalCartAmount,
     navigate,
+    backendURL
   } = useContext(StoreContext);
+
+  
 
   return (
     <div className="cart">
@@ -30,9 +33,9 @@ function Cart() {
         {food_list.map((item, index) => {
           if (cartItem[item._id] > 0) {
             return (
-              <>
+              <div key={index}>
                 <div className="cart-items-title cart-items-item">
-                  <img src={item.image} alt="" />
+                  <img src={backendURL+"/images/"+item.image} alt="" />
                   <p>{item.name}</p>
                   <p>
                     {currency}
@@ -47,7 +50,7 @@ function Cart() {
                   </p>
                 </div>
                 <hr />
-              </>
+              </div>
             );
           }
         })}

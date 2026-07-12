@@ -26,8 +26,8 @@ const listFood = async (req,res, next) => {
     try {
 
         const foods = await food.find({});
-
-        res.json({success: true, data: foods});
+        // console.log(foods);
+        return res.json({success: true, data: foods});
         
     } catch(error) {
         res.json({success: false, message: error.message});
@@ -39,7 +39,7 @@ const listFood = async (req,res, next) => {
 const removeList = async (req, res, next) => {
 
     try {
-        const {id} = req.body;
+        // const {id} = req.body;
 
         const foods = await food.findById(req.body.id);
         

@@ -1,31 +1,58 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "./LoginPopUp.css";
 import { assets } from "../../assets/assets";
+import { StoreContext } from "../../context/StoreContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+
+
 
 function LoginPopup({ setShowLogin }) {
+  const { backendURL, setToken } = useContext(StoreContext);
+
   // const [currentState, setCurrentState] = useState("Sign Up");
   const [currentState, setCurrentState] = useState("Login");
   const [data, setData] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
   });
 
   const onChangeHandler = async (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
-    setData(data => ({...data, [name]:value}));
-  }
+    setData((data) => ({ ...data, [name]: value }));
+  };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const onLogin = async (event) => {
+    event.preventDefault();
+    let newURL = "";
+    if (currentState === "Login") {
+      newURL = `${backendURL}/api/user/login`;
+    } else {
+      newURL = `${backendURL}/api/user/register`;
+    }
 
+    // console.log(newURL, data)
+    const response = await axios.post(newURL, data);
+    if (response.data.success) {
+      // console.log(response);
+      toast.success(response.data.message);
+      setToken(response.data.token);
+      localStorage.setItem('token', response.data.token);
+      setShowLogin(false);
+    } else {
+      toast.error(response.data.message);
+      // alert(response.data.message);
+    }
+  };
 
+  
   return (
     <div className="login-popup">
-      <form action="" className="login-popup-container">
+      <form onSubmit={onLogin} className="login-popup-container">
         <div className="login-popup-title">
           <h2>{currentState}</h2>
           <img
@@ -38,12 +65,28 @@ function LoginPopup({ setShowLogin }) {
           {currentState === "Login" ? (
             <></>
           ) : (
-            <input type="text" onChange={() => onChangeHandler} value={data.name} placeholder="name" className="" required />
+            <input
+              type="text"
+              onChange={onChangeHandler}
+              value={data.name}
+              placeholder="name"
+              name="name"
+              className=""
+              required
+            />
           )}
 
-          <input type="email" name="email" placeholder="Email" onChange={() => onChangeHandler} value={data.email}  required />
           <input
-            onChange={() => onChangeHandler} value={data.password}
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={onChangeHandler}
+            value={data.email}
+            required
+          />
+          <input
+            onChange={onChangeHandler}
+            value={data.password}
             name="password"
             type="password"
             placeholder="Password"
@@ -60,11 +103,13 @@ function LoginPopup({ setShowLogin }) {
         </div>
         {currentState === "Sign Up" ? (
           <p>
-            Already have An Account? <span onClick={() => setCurrentState("Login")}>Login</span>
+            Already have An Account?{" "}
+            <span onClick={() => setCurrentState("Login")}>Login</span>
           </p>
         ) : (
           <p>
-            Create a New Account? <span onClick={() => setCurrentState("Sign Up")}>Click here</span>
+            Create a New Account?{" "}
+            <span onClick={() => setCurrentState("Sign Up")}>Click here</span>
           </p>
         )}
       </form>
