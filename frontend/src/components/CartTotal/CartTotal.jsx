@@ -33,7 +33,7 @@ function CartTotal({ currency, delivery_fee, getTotalCartAmount, navigate }) {
             {getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + delivery_fee}
           </p>
         </div>
-        <button onClick={() => path === "/cart" ? navigate("/order") : navigate('')}>
+        <button onClick={() => path === "/cart" ? navigate("/order") : null}>
          {path === "/cart" ? "PROCEED TO CHECKOUT": "PROCEED TO PAYMENT"}
         </button>
       </div>

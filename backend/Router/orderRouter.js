@@ -1,11 +1,13 @@
 const express = require('express');
 const orderRouter = express.Router();
 
-const authMiddleware = require('../Middleware/auth');
-const { placeOrder } = require('../Controller/orderController');
+const { placeOrder, verifyStripeOrder } = require('../Controller/orderController');
+const { authMiddleware } = require('../Middleware/auth');
 
 
 orderRouter.post('/place', authMiddleware, placeOrder);
+
+orderRouter.post('/verify', authMiddleware, verifyStripeOrder);
 
 
 
