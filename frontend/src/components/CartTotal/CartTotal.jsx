@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./CartTotal.css";
 
-function CartTotal({ currency, delivery_fee, getTotalCartAmount, navigate }) {
-  const path = window.location.pathname;
+function CartTotal({ currency, delivery_fee, getTotalCartAmount, navigate, session_url }) {
+  // const path = window.location.pathname;
 
 //   const { visible, setVisible } = useState(false);
 
@@ -33,14 +33,14 @@ function CartTotal({ currency, delivery_fee, getTotalCartAmount, navigate }) {
             {getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + delivery_fee}
           </p>
         </div>
-        <button onClick={() => path === "/cart" ? navigate("/order") : null}>
+        <button onClick={() => path === "/cart" ? navigate("/order") : session_url ? "" : navigate(`${session_url}`)}>
          {path === "/cart" ? "PROCEED TO CHECKOUT": "PROCEED TO PAYMENT"}
         </button>
       </div>
 
       {/* ----- Promo Code ----- */}
 
-      <div className={`cart-promocode ${path === "/cart" ? "" : "hidden"}`}>
+      <div className={`cart-promocode`}>
         <div>
           <p>If you have a promocode, Enter it here.</p>
           <div className="cart-promocode-input">
