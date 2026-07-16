@@ -65,9 +65,10 @@ const placeOrder = async (req, res) => {
 
 // Verify Order
 
-const verifyStripeOrder = async () => {
-    const {orderId, success} = req.body; 
+const verifyStripeOrder = async (req, res) => {
     try {
+        const {orderId, success} = req.body;
+
         if (success === "true") {
             await order.findByIdAndUpdate(orderId, {payment: true});
             res.json({success: true, message: "Payment Done"});

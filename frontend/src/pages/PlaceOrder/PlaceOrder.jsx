@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import CartTotal from "../../components/CartTotal/CartTotal";
+// import CartTotal from "../../components/CartTotal/CartTotal";
 import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
 import { toast } from "react-toastify";
@@ -11,6 +11,8 @@ function PlaceOrder() {
     delivery_fee,
     currency,
     token,
+    navigate,
+    session_url,
     food_list,
     cartItem,
     backendURL,
@@ -64,9 +66,6 @@ function PlaceOrder() {
     }
   };
 
-  //  useEffect(() => {
-  //   console.log(data)
-  //  }, [data])
 
   return (
     <form onSubmit={placeOrder} className="place-order">
@@ -180,7 +179,7 @@ function PlaceOrder() {
                 : getTotalCartAmount() + delivery_fee}
             </p>
           </div>
-          <button onClick={() => navigate("/orders")}>
+          <button type="submit" onClick={() => navigate('/verify')} >
             PROCEED TO PAYMENT
           </button>
         </div>

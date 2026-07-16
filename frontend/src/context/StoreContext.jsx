@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { food_list } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const StoreContext = createContext(null);
 
@@ -62,8 +63,17 @@ const StoreContextProvider = ({ children }) => {
 
   // get food List from DB.
   const getFoodList = async () => {
-    const response = await axios.get(backendURL + "/api/food/list");
-    setFoodList(response.data.data);
+    try {
+      const response = await axios.get(backendURL + "/api/food/list");
+      if (response.data.success) {
+        setFoodList(response.data.data);
+      } else {
+        toast.error(response.data.message);
+      }
+      // console.log(response.data.success)
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 
   const loadCartData = async (token) => {
@@ -98,6 +108,11 @@ const StoreContextProvider = ({ children }) => {
     token,
     setToken,
     };
+
+    useEffect(() => {
+      console.log(token);
+    }, [])
+
 
   return (
     <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
