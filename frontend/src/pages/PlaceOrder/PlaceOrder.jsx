@@ -5,7 +5,6 @@ import { StoreContext } from "../../context/StoreContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-
 function PlaceOrder() {
   const {
     getTotalCartAmount,
@@ -39,6 +38,13 @@ function PlaceOrder() {
 
   const placeOrder = async (event) => {
     event.preventDefault();
+
+    if (!token) {
+      toast.error("Please sign in before placing an order.");
+      navigate("/");
+      return;
+    }
+
     let orderItems = [];
     food_list.map((item) => {
       if (cartItem[item._id] > 0) {
@@ -47,7 +53,6 @@ function PlaceOrder() {
         orderItems.push(itemInfo);
       }
     });
-    // console.log(orderItems)
     let orderData = {
       address: data,
       items: orderItems,
@@ -60,16 +65,16 @@ function PlaceOrder() {
       { headers: { token } },
     );
 
-    console.log(response)
+    console.log(response);
 
     if (response.data.success) {
       const { session_url } = response.data;
+      // console.log(session_url)
       window.location.replace(session_url);
     } else {
       toast.error(response.data.message);
     }
   };
-
 
   return (
     <form onSubmit={placeOrder} className="place-order">
@@ -183,9 +188,7 @@ function PlaceOrder() {
                 : getTotalCartAmount() + delivery_fee}
             </p>
           </div>
-          <button type="submit" >
-            PROCEED TO PAYMENT
-          </button>
+          <button type="submit">PROCEED TO PAYMENT</button>
         </div>
 
         {/* <CartTotal

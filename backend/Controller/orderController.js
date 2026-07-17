@@ -65,8 +65,9 @@ const placeOrder = async (req, res) => {
 
 // Temperory Verify Order System (Real Method is webhooks)
 const verifyStripeOrder = async (req, res) => {
+    const {orderId, success} = req.body;
+    
     try {
-        const {orderId, success} = req.body;
 
         if (success === "true") {
             await order.findByIdAndUpdate(orderId, {payment: true});
@@ -83,7 +84,21 @@ const verifyStripeOrder = async (req, res) => {
 }
 
 
+// user order for frontend
+
+const userOrders = async (req, res) => {
+    try {
+        
+        const orders = await order.find({userId:req.body.userId});
+        res.json({success: true, data: orders})
+        
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: error.message})
+    }
+}
+
 
 module.exports = {
-    placeOrder, verifyStripeOrder
+    placeOrder, verifyStripeOrder, userOrders
 }
