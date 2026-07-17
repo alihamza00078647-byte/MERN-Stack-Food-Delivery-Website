@@ -5,6 +5,7 @@ import { StoreContext } from "../../context/StoreContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 
+
 function PlaceOrder() {
   const {
     getTotalCartAmount,
@@ -58,6 +59,9 @@ function PlaceOrder() {
       orderData,
       { headers: { token } },
     );
+
+    console.log(response)
+
     if (response.data.success) {
       const { session_url } = response.data;
       window.location.replace(session_url);
@@ -179,7 +183,7 @@ function PlaceOrder() {
                 : getTotalCartAmount() + delivery_fee}
             </p>
           </div>
-          <button type="submit" onClick={() => navigate('/verify')} >
+          <button type="submit" >
             PROCEED TO PAYMENT
           </button>
         </div>

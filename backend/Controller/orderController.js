@@ -63,8 +63,7 @@ const placeOrder = async (req, res) => {
     }
 }
 
-// Verify Order
-
+// Temperory Verify Order System (Real Method is webhooks)
 const verifyStripeOrder = async (req, res) => {
     try {
         const {orderId, success} = req.body;
