@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // import CartTotal from "../../components/CartTotal/CartTotal";
 import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
@@ -65,7 +65,6 @@ function PlaceOrder() {
       { headers: { token } },
     );
 
-    console.log(response);
 
     if (response.data.success) {
       const { session_url } = response.data;
@@ -75,6 +74,15 @@ function PlaceOrder() {
       toast.error(response.data.message);
     }
   };
+
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/cart');
+    } else if (getTotalCartAmount() === 0) {
+      navigate('/cart')
+    }
+  }, [token])
 
   return (
     <form onSubmit={placeOrder} className="place-order">

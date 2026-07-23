@@ -2,10 +2,7 @@ import { useState } from "react";
 import "./CartTotal.css";
 
 function CartTotal({ currency, delivery_fee, getTotalCartAmount, navigate, session_url }) {
-  // const path = window.location.pathname;
-
-//   const { visible, setVisible } = useState(false);
-
+  
   return (
     <div className="cart-bottom">
       <div className="cart-total">

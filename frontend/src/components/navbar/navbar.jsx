@@ -6,13 +6,14 @@ import { StoreContext } from "../../context/StoreContext";
 
 function Navbar({ setShowLogin }) {
   const [menu, setMenu] = useState("Home");
-  const { getTotalCartAmount, token, setToken, navigate } = useContext(StoreContext);
-  
+  const { getTotalCartAmount, token, setToken, navigate } =
+    useContext(StoreContext);
+
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setToken("");
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   return (
     <div className="navbar">
@@ -65,15 +66,17 @@ function Navbar({ setShowLogin }) {
           <div className="navbar-profile">
             <img src={assets.profile_icon} />
             <ul className="nav-profile-dropdown">
+              <Link to="/myorders">
                 <li>
-                    <img src={assets.bag_icon}  />
-                    <p>Orders</p>
+                  <img src={assets.bag_icon} />
+                  <p>Orders</p>
                 </li>
-                <hr />
-                <li onClick={logout}>
-                    <img src={assets.logout_icon}  />
-                    <p>Logout</p>
-                </li>
+              </Link>
+              <hr />
+              <li onClick={logout}>
+                <img src={assets.logout_icon} />
+                <p>Logout</p>
+              </li>
             </ul>
           </div>
         )}
